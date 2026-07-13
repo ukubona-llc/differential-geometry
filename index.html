@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ukubona · TMVES as Differential Geometry</title>
+  <style>
+    /* ── System font stack — no external deps ── */
+    :root {
+      --bg:       #fafaf8;
+      --surface:  #f2f0eb;
+      --border:   #dedad3;
+      --muted:    #888078;
+      --body:     #1a1815;
+      --gold:     #9a7428;
+      --signal:   #1e3a5f;
+      --signal-bg:#e8eef6;
+      --warm:     #7a3020;
+      --warm-bg:  #f7ece8;
+      --mono-col: #8a3010;
+      --row-alt:  #f5f3ee;
+      --thead-bg: #1a1815;
+      --thead-fg: #fafaf8;
+    }
+    [data-theme="dark"] {
+      --bg:       #111210;
+      --surface:  #1c1c1a;
+      --border:   #2e2d29;
+      --muted:    #7a7870;
+      --body:     #e8e6e0;
+      --gold:     #c8a84b;
+      --signal:   #7aaee8;
+      --signal-bg:#152030;
+      --warm:     #d09070;
+      --warm-bg:  #221510;
+      --mono-col: #d08060;
+      --row-alt:  #181816;
+      --thead-bg: #e8e6e0;
+      --thead-fg: #111210;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 18px; scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--body);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.7;
+      padding: 0 1rem;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    /* ── Layout ── */
+    .wrap { max-width: 680px; margin: 0 auto; }
+
+    /* ── Toggle ── */
+    .toggle-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 0.55rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.2s;
+    }
+
+    .site-id {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .toggle-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--body);
+      font-size: 0.78rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .toggle-btn:hover { background: var(--border); }
+
+    /* ── Header ── */
+    header { padding: 3rem 0 2rem; border-bottom: 1px solid var(--border); }
+
+    .eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.9rem;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: clamp(1.75rem, 5vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--body);
+      margin-bottom: 0.6rem;
+    }
+
+    h1 em { font-style: italic; color: var(--gold); font-weight: 400; }
+
+    .subtitle {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 520px;
+    }
+
+    /* ── Main ── */
+    main { padding: 2.5rem 0 4rem; }
+
+    section { margin-bottom: 3rem; }
+
+    /* ── Section heading ── */
+    h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--body);
+      margin-bottom: 0.8rem;
+    }
+
+    .stage-label {
+      display: block;
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    /* ── Prose ── */
+    p {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      color: var(--body);
+    }
+    p:last-child { margin-bottom: 0; }
+
+    strong { font-weight: 700; }
+    em { font-style: italic; }
+
+    /* ── Divider ── */
+    hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+    /* ── Axiom ── */
+    .axiom {
+      display: block;
+      text-align: center;
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--gold);
+      margin: 2rem 0;
+      letter-spacing: 0.01em;
+    }
+
+    /* ── Table ── */
+    .table-wrap {
+      margin: 1.5rem 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    thead tr {
+      background: var(--thead-bg);
+      color: var(--thead-fg);
+    }
+
+    th {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 0.65rem 0.9rem;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 0.7rem 0.9rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:nth-child(even) { background: var(--row-alt); }
+
+    /* Stage V highlight */
+    .row-v { background: var(--signal-bg) !important; }
+    .row-v td:first-child { border-left: 3px solid var(--signal); }
+
+    td.roman {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    td.math {
+      font-family: 'Menlo', 'Consolas', 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: var(--mono-col);
+      white-space: nowrap;
+    }
+
+    td.label { font-weight: 700; }
+
+    td.question { color: var(--muted); font-size: 0.85rem; }
+
+    /* ── Callout blocks ── */
+    .callout {
+      border-radius: 6px;
+      padding: 1.1rem 1.25rem;
+      margin: 1.5rem 0;
+      font-size: 0.93rem;
+      line-height: 1.65;
+    }
+
+    .callout-signal {
+      background: var(--signal-bg);
+      border-left: 3px solid var(--signal);
+    }
+    .callout-signal p { color: var(--signal); }
+
+    .callout-warn {
+      background: var(--warm-bg);
+      border-left: 3px solid var(--warm);
+    }
+    .callout-warn p { color: var(--warm); }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 0 3rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    footer strong { color: var(--body); }
+
+    /* ── Mobile ── */
+    @media (max-width: 480px) {
+      html { font-size: 16px; }
+      th, td { padding: 0.55rem 0.65rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- Sticky bar -->
+  <div class="toggle-bar">
+    <span class="site-id">Ukubona · TMVES</span>
+    <button class="toggle-btn" onclick="toggleTheme()" id="toggle-btn">
+      <span id="toggle-icon">🌙</span> Dark
+    </button>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <p class="eyebrow">Roundtable Archive · July 13 2026</p>
+    <h1>Differential Geometry<br>as <em>Ontology</em></h1>
+    <p class="subtitle">
+      TMVES: Tensor → Matrix → Vector → Eigenmode → Scalar &nbsp;·&nbsp;
+      On the categorical jump from derivative to appraisal
+    </p>
+  </header>
+
+  <main>
+
+    <!-- Preamble -->
+    <section>
+      <h2><span class="stage-label">Preamble</span>The Conceptual Threshold</h2>
+      <p>
+        The interesting move is no longer the analogy — "society is like optimization" — but
+        the stronger proposal: <strong>differential geometry is the ontology.</strong>
+        The objects themselves are derivatives of one another. Reality before interpretation.
+        Compression of what matters. Curvature of the landscape. Invariants under perturbation.
+        And then — categorically outside the chain — judgment about whether this geometry
+        should continue to be inhabited at all.
+      </p>
+
+      <span class="axiom">Okubala si Kulaba — counting is not seeing</span>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Stage</th>
+              <th>Math object</th>
+              <th>Ukubona ontology</th>
+              <th>Question posed</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="roman">I</td>
+              <td class="math">T (Tensor)</td>
+              <td class="label">Event stream</td>
+              <td class="question">What happened?</td>
+            </tr>
+            <tr>
+              <td class="roman">II</td>
+              <td class="math">J = ∂T/∂t</td>
+              <td class="label">Witness / Jacobian</td>
+              <td class="question">What is changing?</td>
+            </tr>
+            <tr>
+              <td class="roman">III</td>
+              <td class="math">H = ∂²T</td>
+              <td class="label">Curvature / Hessian</td>
+              <td class="question">What is becoming structurally inevitable?</td>
+            </tr>
+            <tr>
+              <td class="roman">IV</td>
+              <td class="math">(λ, v)</td>
+              <td class="label">Identity / Eigenmodes</td>
+              <td class="question">Who are we becoming?</td>
+            </tr>
+            <tr class="row-v">
+              <td class="roman">V</td>
+              <td class="math">L (scalar)</td>
+              <td class="label">Appraisal</td>
+              <td class="question">Should this trajectory continue?</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        Notice what happens at V. The fifth stage is not another derivative.
+        It is an <em>evaluation</em> — a categorical jump outside the differential hierarchy.
+      </p>
+    </section>
+
+    <hr />
+
+    <!-- Stage I -->
+    <section>
+      <h2><span class="stage-label">Stage I</span>Event — The Tensor</h2>
+      <p>
+        Reality before interpretation. Not opinions. Not narratives. Simply attributed
+        observations: timestamped, geolocated, actor-attributed, sentiment-tagged.
+        The tensor is intentionally redundant — nothing compressed yet. Its
+        hyper-dimensionality is a feature: a Cartesian excess that refuses premature closure.
+      </p>
+      <p>
+        Coordinates include time, geography, topic embeddings, ideology vectors, actor
+        influence. The challenge at this stage is attribution and ground-truthing amid noise
+        and adversarial gaming of the signal.
+      </p>
+    </section>
+
+    <!-- Stage II -->
+    <section>
+      <h2><span class="stage-label">Stage II</span>Witness — The Jacobian</h2>
+      <p>
+        Compression begins. A Jacobian asks: <em>which dimensions actually matter locally?</em>
+        Almost everything disappears. Only sensitivities remain. This is literally seeing —
+        ukubona in its first operative sense.
+      </p>
+      <p>
+        Adding a lag converts it into a delay-differential system, realistic for human
+        societies where backlash and adaptation are not instantaneous. The lag period
+        functions as the learning rate of a culture: too high produces reactionary
+        overcorrections; too low produces stagnation and eventual fracture.
+      </p>
+      <div class="callout callout-warn">
+        <p>
+          <strong>Measurement error as structural failure.</strong> Modern analytics measure
+          proxy metrics — engagement, rapid polling — rather than underlying intent or material
+          reality. A flawed Jacobian produces a false trajectory. Governance that misreads the
+          magnitude of an acceleration optimizes for a phantom landscape.
+        </p>
+      </div>
+    </section>
+
+    <!-- Stage III -->
+    <section>
+      <h2><span class="stage-label">Stage III</span>Curvature — The Hessian</h2>
+      <p>
+        Now the landscape itself becomes visible. Gradients can disappear; curvature cannot.
+        Two societies may have identical polarization metrics today yet possess completely
+        different Hessians: one sits in a stable basin, one sits on a knife-edge.
+      </p>
+      <p>
+        Societal evolution resembles stochastic gradient descent: iterative, noisy,
+        vulnerable to overshooting. Without adaptive scaling, societies bounce between
+        polar attractors — hyper-universalism and reactionary nationalism — oscillating
+        across the valley without reaching a functional minimum.
+      </p>
+    </section>
+
+    <!-- Stage IV -->
+    <section>
+      <h2><span class="stage-label">Stage IV</span>Identity — Eigenmodes</h2>
+      <p>
+        This is the most original part of the framework.
+        <strong>Identity is not ideology. Identity is the dominant eigenspace.</strong>
+      </p>
+      <p>
+        Conservative, progressive, religious, national, technocratic — these are not merely
+        beliefs. They are persistent directions that survive repeated projections of the
+        Hessian. An ideology dies. An eigenmode survives perturbation. That is why
+        civilizations can oscillate politically while remaining recognizably themselves
+        across centuries.
+      </p>
+      <p>
+        Resilient institutional design must allow populations to resolve conflicts along
+        lower-energy, orthogonal dimensions rather than forcing all behavioral data through
+        a totalizing identity filter.
+      </p>
+    </section>
+
+    <!-- Stage V -->
+    <section>
+      <h2><span class="stage-label">Stage V</span>Appraisal — The Categorical Jump</h2>
+
+      <div class="callout callout-signal">
+        <p>
+          Most theories terminate at prediction.<br>
+          Ukubona terminates at judgment —<br>
+          not moral judgment, but <strong>geometric judgment</strong>:<br><br>
+          <em>Is the current manifold still the correct manifold?</em>
+        </p>
+      </div>
+
+      <p>
+        Optimization assumes the landscape is fixed. Ukubona asks whether the optimization
+        itself is occurring in the wrong geometry — a question prior to descent, prior to
+        computation. Appraisal functions less like the end of a pipeline and more like a
+        return to the beginning: a ground-truth update that determines whether the entire
+        coordinate system must be revised before further descent is justified.
+      </p>
+      <p>
+        Differential calculus since Newton has assumed the manifold and asked about motion.
+        Ukubona introduces the earlier question: <strong>before calculating motion, verify
+        the geometry.</strong>
+      </p>
+    </section>
+
+    <hr />
+
+    <!-- Kinematic note -->
+    <section>
+      <h2><span class="stage-label">Structural Note</span>Why Snap Breaks the Analogy</h2>
+      <p>
+        The kinematic hierarchy position → velocity → acceleration → jerk → snap remains
+        inside a single coordinate system, closed under differentiation. Nothing categorically
+        new appears after snap — it is merely derivative-six.
+      </p>
+      <p>
+        Ukubona is not asking "what is the next derivative?" It is asking <em>"should these
+        derivatives exist at all?"</em> That question belongs to a different logical type —
+        the same distinction as proof versus meta-proof, or map versus choice of projection
+        system. The TMVES pentad is <strong>4 + 1</strong>, not 5.
+      </p>
+    </section>
+
+    <hr />
+
+    <!-- Clinical -->
+    <section>
+      <h2><span class="stage-label">Application</span>Living Kidney Donation &amp; R(t)</h2>
+      <p>
+        Traditional evidence-based medicine asks: <em>given this model, what is the optimal
+        intervention?</em> Ukubona asks first: <em>is this the right manifold?</em>
+      </p>
+      <p>
+        Not "how likely is CKD?" but "how close is this person to leaving the manifold on
+        which compensatory adaptation remains possible?" That is the robustness margin:
+        <strong>R(t) = d(x, ∂M)</strong> — distance to the boundary of the current manifold.
+        A geometric quantity, not a probabilistic one.
+      </p>
+      <div class="callout callout-signal">
+        <p>
+          Instead of: "Your estimated lifetime ESRD risk increases by 0.3%."<br><br>
+          Ukubona says: "Your current physiological trajectory has substantial robustness.
+          Donation is expected to reduce that margin by approximately <em>x</em>. Here is how
+          close you remain to the region where compensation becomes unstable."
+        </p>
+      </div>
+      <p>
+        Patients understand landscapes far better than confidence intervals. R(t) supersedes
+        the CI because it interrogates the geometry of the outcome space rather than the
+        density of outcomes within a fixed — and possibly wrong — space.
+      </p>
+    </section>
+
+    <hr />
+
+    <!-- Synthesis -->
+    <section>
+      <h2><span class="stage-label">Synthesis</span>The Complete Sequence</h2>
+      <p>
+        <strong>Tensor</strong> — what happened? Reality before compression.<br>
+        <strong>Jacobian</strong> — what is changing? Local sensitivity; first seeing.<br>
+        <strong>Hessian</strong> — how is the landscape bending? Structural inevitability.<br>
+        <strong>Eigenmodes</strong> — what remains invariant under that bending? Identity as
+        persistent direction.<br>
+        <strong>Appraisal</strong> — should we still inhabit this geometry? Perception
+        precedes optimization.
+      </p>
+      <span class="axiom">Ukubona — to see, to witness, perceptive insight</span>
+      <p>
+        The final step is not derivative five. It is an epistemic operation: the return to
+        the beginning, the ground-truth update that asks whether the coordinate system itself
+        must be revised. Vision precedes computation. That is the axiom. That is the
+        difference between counting and seeing.
+      </p>
+    </section>
+
+  </main>
+
+  <footer>
+    <strong>Ukubona LLC</strong> · Roundtable Archive · July 13, 2026<br>
+    TMVES: Tensor → Matrix (Jacobian) → Vector (Hessian) → Eigenmode → Scalar (Appraisal)<br>
+    R(t) = d(x, ∂M) &nbsp;·&nbsp; θᵗ = Σ Eventᵢ &nbsp;·&nbsp;
+    <em>Okubala si Kulaba</em>
+  </footer>
+
+</div>
+
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    const btn = document.getElementById('toggle-btn');
+    const icon = document.getElementById('toggle-icon');
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    icon.textContent = isDark ? '🌙' : '☀️';
+    btn.childNodes[1].textContent = isDark ? ' Dark' : ' Light';
+  }
+</script>
+
+</body>
+</html>
