@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ukubona · TMVES as Differential Geometry (Rev. 2)</title>
+  <title>Ukubona · TMVES as Differential Geometry (Rev. 3)</title>
   <style>
     :root {
       --bg:       #fafaf8;
@@ -129,7 +129,7 @@
       padding: 0.6rem 0.85rem;
       border-radius: 4px;
       max-width: 520px;
-      line-height: 1.55;
+      line-height: 1.6;
     }
 
     main { padding: 2.5rem 0 4rem; }
@@ -233,6 +233,8 @@
     td.tier.t-spec { color: var(--spectral); }
     td.tier.t-judg { color: var(--signal); }
 
+    .hinge-mark { color: var(--spectral); font-weight: 700; }
+
     .callout {
       border-radius: 6px;
       padding: 1.1rem 1.25rem;
@@ -248,12 +250,20 @@
     .callout-spectral p { color: var(--spectral); }
 
     /* Operator chain diagram */
+    .op-chain-group { margin: 1.4rem 0; }
+    .op-chain-row-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
     .op-chain {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       gap: 0.4rem;
-      margin: 1.6rem 0;
       font-family: 'Menlo', 'Consolas', 'Courier New', monospace;
       font-size: 0.82rem;
     }
@@ -312,17 +322,21 @@
   </div>
 
   <header>
-    <p class="eyebrow">Roundtable Archive · Revision 2 · July 13 2026</p>
+    <p class="eyebrow">Roundtable Archive · Revision 3 · July 13 2026</p>
     <h1>Differential Geometry<br>as <em>Ontology</em></h1>
     <p class="subtitle">
-      TMVES: Tensor → Matrix (Jacobian) → Matrix (Hessian) → Eigenmode → Scalar &nbsp;·&nbsp;
+      TMVES: Tensor → Matrix (Jacobian) → Vector (dominant mode of the Hessian) →
+      Eigenmode (its full spectrum) → Scalar &nbsp;·&nbsp;
       On the categorical jump from derivative to appraisal
     </p>
     <p class="revnote">
-      <strong>Revision note.</strong> This version corrects an object-type error in the
-      original footer (the Hessian is a matrix, not a vector — see Structural Note below),
-      and adds the explicit operator chain T ↦ J ↦ H ↦ E ↦ L requested at roundtable, along
-      with the underlying three-tier structure: Geometry → Spectra → Judgment.
+      <strong>Revision 3.</strong> Three fixes from continued review:<br>
+      (1) recovered the literal T-M-V-E-S decode — Stage III's "V" is now the dominant
+      eigenvector of H, not H itself;<br>
+      (2) fixed the operator chain so H is computed directly from T rather than composed
+      through J, keeping it properly symmetric;<br>
+      (3) made explicit that Stage III's V and Stage IV's identity-eigenmodes are the same
+      matrix's spectrum, read from opposite ends, connected by A = I − ηH.
     </p>
   </header>
 
@@ -346,11 +360,11 @@
         <table>
           <thead>
             <tr>
-              <th>Stage</th>
-              <th>Tier</th>
-              <th>Math object</th>
-              <th>Ukubona ontology</th>
-              <th>Question posed</th>
+              <th scope="col">Stage</th>
+              <th scope="col">Tier</th>
+              <th scope="col">Math object</th>
+              <th scope="col">Ukubona ontology</th>
+              <th scope="col">Question posed</th>
             </tr>
           </thead>
           <tbody>
@@ -370,15 +384,15 @@
             </tr>
             <tr>
               <td class="roman">III</td>
-              <td class="tier t-geo">Geometry</td>
-              <td class="math">H = ∂²T</td>
+              <td class="tier t-geo">Geometry <span class="hinge-mark">†</span></td>
+              <td class="math">H = ∂²T/∂x² → v</td>
               <td class="label">Curvature / Hessian</td>
               <td class="question">What is becoming structurally inevitable?</td>
             </tr>
             <tr class="row-spectral">
               <td class="roman">IV</td>
               <td class="tier t-spec">Spectra</td>
-              <td class="math">(λ, v)</td>
+              <td class="math">{(λ, v)}</td>
               <td class="label">Parmenides / Eigenmode</td>
               <td class="question">Who are we becoming?</td>
             </tr>
@@ -396,35 +410,42 @@
       <p>
         Notice what happens at V. The fifth stage is not another derivative.
         It is an <em>evaluation</em> — a categorical jump outside the differential hierarchy.
-        The tier column above is new to this revision: it makes explicit that TMVES is not
-        one continuous mathematical operation but three distinct mathematical regimes wearing
-        one mnemonic.
+        The tier column above marks which mathematical regime governs each stage. Stage III
+        carries a dagger: it is the seam where the geometric tier's rank-reducing sequence —
+        tensor, matrix, vector — first requires a spectral operation to complete itself.
+        See Structural Correction, directly below.
       </p>
     </section>
 
     <hr />
 
-    <!-- NEW: Three-tier sub-annotation -->
+    <!-- Three-tier sub-annotation, rewritten for Rev 3 -->
     <section>
       <h2><span class="stage-label">Structural Correction</span>Geometry → Spectra → Judgment</h2>
       <p>
-        TMVES is the surface mnemonic — the memorable, pentadic label that connects this
-        framework to the other Ukubona pentads (SNAP neuroanatomy, the twelve-domain grid,
-        the Nietzschean genealogy). But underneath the five letters, only three mathematical
-        regimes are actually at work. Stages I–III stay inside <strong>differential
-        geometry</strong> proper. Stage IV leaves differentiation behind and enters
-        <strong>spectral / linear algebra</strong> — eigenvectors are not derivatives of
-        anything, they are solutions to Hv = λv. Stage V leaves mathematics-as-description
-        behind entirely and enters <strong>judgment</strong> — an evaluative functional, not
-        an operator in the same family as the first four.
+        TMVES is the surface mnemonic connecting this framework to the other Ukubona pentads
+        (SNAP neuroanatomy, the twelve-domain grid, the Nietzschean genealogy). The previous
+        revision treated the letter-by-letter decode as unrecoverable — the Hessian is a
+        matrix, not a vector, so "V" seemed to be doing no real work — and fell back to a
+        coarser three-tier reading underneath the mnemonic instead. That fallback was
+        premature. The decode can be recovered exactly, once "Vector" is read correctly: not
+        the Hessian itself, but the single dominant eigenvector extracted from it — a genuine
+        rank-1 object, found by the same operation (eig(·)) that Stage IV commits to in full
+        one step later. Read this way, TMVES is a true rank-reducing sequence:
+        <strong>Tensor</strong> (rank n) → <strong>Matrix</strong> (rank 2, the Jacobian) →
+        <strong>Vector</strong> (rank 1, the dominant curvature direction) →
+        <strong>Eigenmode</strong> (the complete spectrum) → <strong>Scalar</strong> (rank 0,
+        appraisal).
       </p>
       <div class="callout callout-spectral">
         <p>
-          <strong>The mnemonic stays. The claim changes.</strong> "Differential geometry is
-          the ontology" is only accurate through Stage III. From Stage IV onward the honest
-          title is closer to <em>Geometry, then Spectra, then Judgment</em> — three tiers,
-          not one continuous derivative chain. TMVES remains the branding; this is the
-          annotation underneath it for anyone reading the mathematics literally.
+          <strong>The mnemonic and the claim now agree.</strong> The three-tier structure —
+          Geometry, Spectra, Judgment — still holds as the coarse map; it isn't wrong, just
+          not the finest-grained true story. Stage III turns out to sit exactly on the seam
+          between the first two tiers rather than cleanly inside Geometry alone: its primary
+          object, H, is geometric, but its export, v, already requires a first taste of the
+          spectral machinery Stage IV completes. That seam is marked with a dagger (†) in the
+          tier table above.
         </p>
       </div>
     </section>
@@ -491,6 +512,17 @@
         polar attractors — hyper-universalism and reactionary nationalism — oscillating
         across the valley without reaching a functional minimum.
       </p>
+      <p>
+        Underneath that dynamical picture sits a simpler fact about what this stage actually
+        exports. Stage III's own compressed output — the "V" the pentad's name promises — is
+        a single vector: the dominant eigenvector of H, the direction the landscape is
+        currently bending along most sharply. Finding it requires the same machinery Stage IV
+        will use exhaustively (solving Hv = λv), but only a first, partial look — the single
+        top mode, not the full spectrum. That keeps V inside the geometric tier by rank, a
+        vector one dimension downstream of a matrix, even though extracting it already
+        borrows the operator that fully blooms one stage later. Stage III, in other words, is
+        where geometry and spectra first touch.
+      </p>
     </section>
 
     <!-- Stage IV -->
@@ -514,6 +546,26 @@
         Resilient institutional design must allow populations to resolve conflicts along
         lower-energy, orthogonal dimensions rather than forcing all behavioral data through
         a totalizing identity filter.
+      </p>
+      <p>
+        Pin down what A actually is, and "lower-energy" stops being a metaphor. If the update
+        really is gradient-descent-like, as Stage III already proposed, then A = I − ηH
+        specifically — and a matrix shares its eigenvectors with any polynomial of itself:
+        Hv = λv forces Av = (1 − ηλ)v. No new direction-finding happens between Stage III and
+        Stage IV, only a re-ranking of directions Stage III already had access to. Stage III
+        surfaces the top of H's spectrum: largest λ, steepest curvature, the direction under
+        the most immediate pressure right now. Stage IV's identity-eigenmodes sit at the
+        opposite end — λ closest to zero, where the corresponding eigenvalue of A sits
+        closest to 1: the direction repeated application leaves essentially untouched
+        (provided η is small enough not to overshoot; too large a step flips even a
+        positive-λ direction's eigenvalue negative, which is the same oscillatory "bouncing
+        between polar attractors" Stage III already named, seen from the other side). That is
+        what "survives repeated projections of the Hessian" means in closed form — not
+        surviving despite the dynamics, but occupying exactly the coordinates the dynamics
+        has nothing to say about. Nor is it a coincidence that this recovers Stage III's
+        basin-versus-knife-edge language too: the near-null directions are the stable basin's
+        floor; where the landscape is a knife-edge instead (some λ < 0), those directions grow
+        without bound rather than persist, and identity itself becomes the unstable thing.
       </p>
     </section>
 
@@ -546,48 +598,69 @@
 
     <hr />
 
-    <!-- NEW: Operator chain -->
+    <!-- Operator chain, rewritten for Rev 3 -->
     <section>
       <h2><span class="stage-label">Formalization</span>The Operator Chain</h2>
       <p>
-        Naming the maps between stages turns the pentad from a taxonomy into a pipeline.
-        Three of the four maps are genuine operators in a shared family; the last is not,
-        and is marked differently on purpose.
+        Naming the maps between stages turns the pentad from a taxonomy into a pipeline — and
+        the previous revision's version of that pipeline had a quiet bug. T ↦ J ↦ H, drawn as
+        one continuous chain, composed a time-derivative with a space-derivative into a mixed
+        partial with no particular reason to be the symmetric matrix the spectral step
+        actually needs. The fix: make J and H both direct children of T — a branch, not a
+        chain — so H stays a proper, symmetric second-derivative matrix throughout.
       </p>
 
-      <div class="op-chain">
-        <span class="op-node">T</span>
-        <span class="op-arrow"><span class="op-fn">∂/∂t</span><span class="arrow-glyph">→</span></span>
-        <span class="op-node">J</span>
-        <span class="op-arrow"><span class="op-fn">∂/∂x</span><span class="arrow-glyph">→</span></span>
-        <span class="op-node">H</span>
-        <span class="op-arrow spectral"><span class="op-fn">eig(·)</span><span class="arrow-glyph">→</span></span>
-        <span class="op-node">(λ, v)</span>
-        <span class="op-arrow judgment"><span class="op-fn">appraise(·)</span><span class="arrow-glyph">⇒</span></span>
-        <span class="op-node">L</span>
+      <div class="op-chain-group">
+        <div class="op-chain-row-label">Stage I → II — branch, does not continue downstream</div>
+        <div class="op-chain">
+          <span class="op-node">T</span>
+          <span class="op-arrow"><span class="op-fn">∂/∂t</span><span class="arrow-glyph">→</span></span>
+          <span class="op-node">J</span>
+        </div>
+      </div>
+
+      <div class="op-chain-group">
+        <div class="op-chain-row-label">Stage I → V — the main spine</div>
+        <div class="op-chain">
+          <span class="op-node">T</span>
+          <span class="op-arrow"><span class="op-fn">∂²/∂x²</span><span class="arrow-glyph">→</span></span>
+          <span class="op-node">H</span>
+          <span class="op-arrow spectral"><span class="op-fn">eig(·)</span><span class="arrow-glyph">→</span></span>
+          <span class="op-node">{(λ,v)}</span>
+          <span class="op-arrow judgment"><span class="op-fn">appraise(·)</span><span class="arrow-glyph">⇒</span></span>
+          <span class="op-node">L</span>
+        </div>
       </div>
 
       <ul style="margin: 0 0 1rem 1.2rem; font-size: 0.95rem; line-height: 1.8;">
-        <li><strong>T ↦ J</strong> — differentiation. Well-posed, first-order linearization.</li>
-        <li><strong>J ↦ H</strong> — differentiation again. Well-posed, second-order curvature.</li>
-        <li><strong>H ↦ (λ, v)</strong> — <em>not</em> differentiation. Spectral decomposition:
-          solve Hv = λv. This is the seam where the framework leaves differential geometry and
-          enters linear algebra.</li>
-        <li><strong>(λ, v) ↦ L</strong> — <em>not</em> an operator in the same family at all.
-          An evaluative functional, closer to a Lyapunov function or a hazard functional than
-          to a derivative or an eigenvalue problem. Drawn with a double arrow (⇒) above rather
-          than a single one, deliberately, to mark that this step is not the same kind of move
-          as the first three.</li>
+        <li><strong>T ↦ J</strong> — differentiation with respect to time. Well-posed,
+          first-order. Feeds Stage II's own lag/delay-differential diagnostics and stops
+          there; it does not continue into curvature.</li>
+        <li><strong>T ↦ H</strong> — differentiation with respect to the feature/spatial
+          coordinates, taken directly from T rather than composed through J. That keeps H
+          symmetric by construction (Clairaut/Schwarz), which routing it through J would not
+          guarantee — the previous revision's chain silently produced a mixed partial instead
+          of a proper Hessian.</li>
+        <li><strong>H ↦ {(λ,v)}</strong> — <em>not</em> differentiation. Spectral
+          decomposition: solve Hv = λv for the complete eigenbasis. Stage III reads only the
+          top of this spectrum (the single dominant vector, V); Stage IV reads the rest. Same
+          matrix, same operator, two depths — see Stage IV, above, for why the far end is
+          where identity lives.</li>
+        <li><strong>{(λ,v)} ↦ L</strong> — <em>not</em> an operator in the same family at
+          all. An evaluative functional, closer to a Lyapunov function or a hazard functional
+          than to a derivative or an eigenvalue problem. Drawn with a double arrow (⇒) above
+          rather than a single one, deliberately, to mark that this step is not the same kind
+          of move as the first three.</li>
       </ul>
 
       <div class="callout callout-spectral">
         <p>
           <strong>Why L is not formalized as "just another arrow."</strong> The whole
           philosophical claim of Stage V is that appraisal is categorically outside the
-          differential-then-spectral chain. Giving E ↦ L the same visual and notational status
-          as T ↦ J would quietly undo that argument. The double arrow above is the honest
-          notation: L depends on (λ, v), but it is not derived from it the way H is derived
-          from J.
+          differential-then-spectral chain. Giving the spectrum-to-L step the same visual and
+          notational status as T ↦ H would quietly undo that argument. The double arrow above
+          is the honest notation: L depends on {(λ,v)}, but it is not derived from it the way
+          H is derived from T, or the spectrum from H.
         </p>
       </div>
     </section>
@@ -608,7 +681,9 @@
         the same distinction as proof versus meta-proof, or map versus choice of projection
         system. The TMVES pentad is <strong>4 + 1</strong>, not 5 — and, more precisely per
         the tier table above, it is <strong>3 + 1 + 1</strong>: three differential-geometric
-        stages, one spectral stage, one judgment stage.
+        stages, one spectral stage, one judgment stage, with the third geometric stage
+        already reaching into the spectral one (see Structural Correction, above) rather than
+        the boundary falling cleanly between stages three and four.
       </p>
     </section>
 
@@ -654,8 +729,8 @@
         <strong>Tensor</strong> — what happened? Reality before compression.<br>
         <strong>Jacobian</strong> — what is changing? Local sensitivity; first seeing.<br>
         <strong>Hessian</strong> — how is the landscape bending? Structural inevitability.<br>
-        <strong>Eigenmodes</strong> — what remains invariant under that bending? Identity as
-        persistent direction.<br>
+        <strong>Eigenmodes</strong> — what remains invariant under that bending, at the
+        flattest end of it? Identity as persistent direction.<br>
         <strong>Appraisal</strong> — should we still inhabit this geometry? Perception
         precedes optimization.
       </p>
@@ -671,12 +746,14 @@
   </main>
 
   <footer>
-    <strong>Ukubona LLC</strong> · Roundtable Archive · Revision 2 · July 13, 2026<br>
-    TMVES mnemonic: Tensor → Jacobian → Hessian → Eigenmode → Scalar
+    <strong>Ukubona LLC</strong> · Roundtable Archive · Revision 3 · July 13, 2026<br>
+    TMVES mnemonic: Tensor → Matrix (Jacobian) → Vector (dominant mode of the Hessian) →
+    Eigenmode (its full spectrum) → Scalar (appraisal)
     <span class="tier-line">
-      <span class="tier-geo">Geometry</span> (T, J, H — differentiation) →
-      <span class="tier-spec">Spectra</span> ((λ,v) — eigendecomposition) →
-      <span class="tier-judg">Judgment</span> (L — appraisal functional, not a derivative)
+      <span class="tier-geo">Geometry</span> {T, M} →
+      <span class="hinge-mark">seam</span> {V — top of H's spectrum} →
+      <span class="tier-spec">Spectra</span> {E — H's full spectrum, same matrix} →
+      <span class="tier-judg">Judgment</span> {S — appraisal functional, not a derivative}
     </span>
     <span class="tier-line">
       R(t) = d(x, ∂M) &nbsp;·&nbsp; θᵗ = Σ Eventᵢ &nbsp;·&nbsp;
