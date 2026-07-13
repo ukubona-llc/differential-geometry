@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ukubona · TMVES as Differential Geometry</title>
+  <title>Ukubona · TMVES as Differential Geometry (Rev. 2)</title>
   <style>
-    /* ── System font stack — no external deps ── */
     :root {
       --bg:       #fafaf8;
       --surface:  #f2f0eb;
@@ -17,6 +16,8 @@
       --signal-bg:#e8eef6;
       --warm:     #7a3020;
       --warm-bg:  #f7ece8;
+      --spectral: #4a3f7a;
+      --spectral-bg: #edeaf7;
       --mono-col: #8a3010;
       --row-alt:  #f5f3ee;
       --thead-bg: #1a1815;
@@ -33,6 +34,8 @@
       --signal-bg:#152030;
       --warm:     #d09070;
       --warm-bg:  #221510;
+      --spectral: #b3a4e8;
+      --spectral-bg: #1e1a2e;
       --mono-col: #d08060;
       --row-alt:  #181816;
       --thead-bg: #e8e6e0;
@@ -40,9 +43,7 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { font-size: 18px; scroll-behavior: smooth; }
-
     body {
       background: var(--bg);
       color: var(--body);
@@ -52,10 +53,8 @@
       transition: background 0.2s, color 0.2s;
     }
 
-    /* ── Layout ── */
     .wrap { max-width: 680px; margin: 0 auto; }
 
-    /* ── Toggle ── */
     .toggle-bar {
       position: sticky;
       top: 0;
@@ -92,7 +91,6 @@
     }
     .toggle-btn:hover { background: var(--border); }
 
-    /* ── Header ── */
     header { padding: 3rem 0 2rem; border-bottom: 1px solid var(--border); }
 
     .eyebrow {
@@ -122,12 +120,21 @@
       max-width: 520px;
     }
 
-    /* ── Main ── */
-    main { padding: 2.5rem 0 4rem; }
+    .revnote {
+      margin-top: 1rem;
+      font-size: 0.78rem;
+      color: var(--spectral);
+      background: var(--spectral-bg);
+      border-left: 3px solid var(--spectral);
+      padding: 0.6rem 0.85rem;
+      border-radius: 4px;
+      max-width: 520px;
+      line-height: 1.55;
+    }
 
+    main { padding: 2.5rem 0 4rem; }
     section { margin-bottom: 3rem; }
 
-    /* ── Section heading ── */
     h2 {
       font-size: 1.05rem;
       font-weight: 700;
@@ -146,21 +153,13 @@
       margin-bottom: 0.3rem;
     }
 
-    /* ── Prose ── */
-    p {
-      font-size: 1rem;
-      margin-bottom: 1rem;
-      color: var(--body);
-    }
+    p { font-size: 1rem; margin-bottom: 1rem; color: var(--body); }
     p:last-child { margin-bottom: 0; }
-
     strong { font-weight: 700; }
     em { font-style: italic; }
 
-    /* ── Divider ── */
     hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
 
-    /* ── Axiom ── */
     .axiom {
       display: block;
       text-align: center;
@@ -171,7 +170,16 @@
       letter-spacing: 0.01em;
     }
 
-    /* ── Table ── */
+    .pullquote {
+      font-size: 1.25rem;
+      font-weight: 600;
+      line-height: 1.4;
+      color: var(--signal);
+      border-left: 3px solid var(--signal);
+      padding: 0.2rem 0 0.2rem 1.1rem;
+      margin: 1.6rem 0;
+    }
+
     .table-wrap {
       margin: 1.5rem 0;
       overflow-x: auto;
@@ -180,17 +188,8 @@
       border-radius: 6px;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.88rem;
-    }
-
-    thead tr {
-      background: var(--thead-bg);
-      color: var(--thead-fg);
-    }
-
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    thead tr { background: var(--thead-bg); color: var(--thead-fg); }
     th {
       font-size: 0.65rem;
       letter-spacing: 0.12em;
@@ -200,40 +199,40 @@
       text-align: left;
       white-space: nowrap;
     }
-
     td {
       padding: 0.7rem 0.9rem;
       border-bottom: 1px solid var(--border);
       vertical-align: top;
       line-height: 1.5;
     }
-
     tbody tr:last-child td { border-bottom: none; }
     tbody tr:nth-child(even) { background: var(--row-alt); }
 
-    /* Stage V highlight */
     .row-v { background: var(--signal-bg) !important; }
     .row-v td:first-child { border-left: 3px solid var(--signal); }
 
-    td.roman {
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--muted);
-      white-space: nowrap;
-    }
+    .row-spectral { background: var(--spectral-bg) !important; }
+    .row-spectral td:first-child { border-left: 3px solid var(--spectral); }
 
+    td.roman { font-size: 0.78rem; font-weight: 700; color: var(--muted); white-space: nowrap; }
     td.math {
       font-family: 'Menlo', 'Consolas', 'Courier New', monospace;
       font-size: 0.8rem;
       color: var(--mono-col);
       white-space: nowrap;
     }
-
     td.label { font-weight: 700; }
-
     td.question { color: var(--muted); font-size: 0.85rem; }
+    td.tier {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    td.tier.t-geo { color: var(--warm); }
+    td.tier.t-spec { color: var(--spectral); }
+    td.tier.t-judg { color: var(--signal); }
 
-    /* ── Callout blocks ── */
     .callout {
       border-radius: 6px;
       padding: 1.1rem 1.25rem;
@@ -241,34 +240,63 @@
       font-size: 0.93rem;
       line-height: 1.65;
     }
-
-    .callout-signal {
-      background: var(--signal-bg);
-      border-left: 3px solid var(--signal);
-    }
+    .callout-signal { background: var(--signal-bg); border-left: 3px solid var(--signal); }
     .callout-signal p { color: var(--signal); }
-
-    .callout-warn {
-      background: var(--warm-bg);
-      border-left: 3px solid var(--warm);
-    }
+    .callout-warn { background: var(--warm-bg); border-left: 3px solid var(--warm); }
     .callout-warn p { color: var(--warm); }
+    .callout-spectral { background: var(--spectral-bg); border-left: 3px solid var(--spectral); }
+    .callout-spectral p { color: var(--spectral); }
 
-    /* ── Footer ── */
+    /* Operator chain diagram */
+    .op-chain {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.4rem;
+      margin: 1.6rem 0;
+      font-family: 'Menlo', 'Consolas', 'Courier New', monospace;
+      font-size: 0.82rem;
+    }
+    .op-node {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 0.4rem 0.65rem;
+      color: var(--body);
+      font-weight: 700;
+    }
+    .op-arrow {
+      color: var(--muted);
+      font-size: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.2;
+    }
+    .op-arrow .op-fn { color: var(--warm); }
+    .op-arrow.spectral .op-fn { color: var(--spectral); }
+    .op-arrow.judgment { }
+    .op-arrow.judgment .op-fn { color: var(--signal); font-weight: 700; }
+    .op-arrow .arrow-glyph { font-size: 1rem; }
+    .op-arrow.judgment .arrow-glyph { color: var(--signal); }
+
     footer {
       border-top: 1px solid var(--border);
       padding: 2rem 0 3rem;
       font-size: 0.75rem;
       color: var(--muted);
-      line-height: 1.65;
+      line-height: 1.75;
     }
-
     footer strong { color: var(--body); }
+    footer .tier-line { display: block; margin-top: 0.3rem; }
+    footer .tier-geo { color: var(--warm); }
+    footer .tier-spec { color: var(--spectral); }
+    footer .tier-judg { color: var(--signal); }
 
-    /* ── Mobile ── */
     @media (max-width: 480px) {
       html { font-size: 16px; }
       th, td { padding: 0.55rem 0.65rem; }
+      .op-chain { font-size: 0.72rem; }
     }
   </style>
 </head>
@@ -276,7 +304,6 @@
 
 <div class="wrap">
 
-  <!-- Sticky bar -->
   <div class="toggle-bar">
     <span class="site-id">Ukubona · TMVES</span>
     <button class="toggle-btn" onclick="toggleTheme()" id="toggle-btn">
@@ -284,13 +311,18 @@
     </button>
   </div>
 
-  <!-- Header -->
   <header>
-    <p class="eyebrow">Roundtable Archive · July 13 2026</p>
+    <p class="eyebrow">Roundtable Archive · Revision 2 · July 13 2026</p>
     <h1>Differential Geometry<br>as <em>Ontology</em></h1>
     <p class="subtitle">
-      TMVES: Tensor → Matrix → Vector → Eigenmode → Scalar &nbsp;·&nbsp;
+      TMVES: Tensor → Matrix (Jacobian) → Matrix (Hessian) → Eigenmode → Scalar &nbsp;·&nbsp;
       On the categorical jump from derivative to appraisal
+    </p>
+    <p class="revnote">
+      <strong>Revision note.</strong> This version corrects an object-type error in the
+      original footer (the Hessian is a matrix, not a vector — see Structural Note below),
+      and adds the explicit operator chain T ↦ J ↦ H ↦ E ↦ L requested at roundtable, along
+      with the underlying three-tier structure: Geometry → Spectra → Judgment.
     </p>
   </header>
 
@@ -315,6 +347,7 @@
           <thead>
             <tr>
               <th>Stage</th>
+              <th>Tier</th>
               <th>Math object</th>
               <th>Ukubona ontology</th>
               <th>Question posed</th>
@@ -323,30 +356,35 @@
           <tbody>
             <tr>
               <td class="roman">I</td>
+              <td class="tier t-geo">Geometry</td>
               <td class="math">T (x, y, z)</td>
               <td class="label">Stream / Cartesian</td>
               <td class="question">What happened?</td>
             </tr>
             <tr>
               <td class="roman">II</td>
+              <td class="tier t-geo">Geometry</td>
               <td class="math">J = ∂T/∂t</td>
               <td class="label">Witness / Jacobian</td>
               <td class="question">What is changing?</td>
             </tr>
             <tr>
               <td class="roman">III</td>
+              <td class="tier t-geo">Geometry</td>
               <td class="math">H = ∂²T</td>
               <td class="label">Curvature / Hessian</td>
               <td class="question">What is becoming structurally inevitable?</td>
             </tr>
-            <tr>
+            <tr class="row-spectral">
               <td class="roman">IV</td>
+              <td class="tier t-spec">Spectra</td>
               <td class="math">(λ, v)</td>
               <td class="label">Parmenides / Eigenmode</td>
               <td class="question">Who are we becoming?</td>
             </tr>
             <tr class="row-v">
               <td class="roman">V</td>
+              <td class="tier t-judg">Judgment</td>
               <td class="math">L (scalar)</td>
               <td class="label">Appraisal / Threat</td>
               <td class="question">Should this trajectory continue?</td>
@@ -358,14 +396,44 @@
       <p>
         Notice what happens at V. The fifth stage is not another derivative.
         It is an <em>evaluation</em> — a categorical jump outside the differential hierarchy.
+        The tier column above is new to this revision: it makes explicit that TMVES is not
+        one continuous mathematical operation but three distinct mathematical regimes wearing
+        one mnemonic.
       </p>
+    </section>
+
+    <hr />
+
+    <!-- NEW: Three-tier sub-annotation -->
+    <section>
+      <h2><span class="stage-label">Structural Correction</span>Geometry → Spectra → Judgment</h2>
+      <p>
+        TMVES is the surface mnemonic — the memorable, pentadic label that connects this
+        framework to the other Ukubona pentads (SNAP neuroanatomy, the twelve-domain grid,
+        the Nietzschean genealogy). But underneath the five letters, only three mathematical
+        regimes are actually at work. Stages I–III stay inside <strong>differential
+        geometry</strong> proper. Stage IV leaves differentiation behind and enters
+        <strong>spectral / linear algebra</strong> — eigenvectors are not derivatives of
+        anything, they are solutions to Hv = λv. Stage V leaves mathematics-as-description
+        behind entirely and enters <strong>judgment</strong> — an evaluative functional, not
+        an operator in the same family as the first four.
+      </p>
+      <div class="callout callout-spectral">
+        <p>
+          <strong>The mnemonic stays. The claim changes.</strong> "Differential geometry is
+          the ontology" is only accurate through Stage III. From Stage IV onward the honest
+          title is closer to <em>Geometry, then Spectra, then Judgment</em> — three tiers,
+          not one continuous derivative chain. TMVES remains the branding; this is the
+          annotation underneath it for anyone reading the mathematics literally.
+        </p>
+      </div>
     </section>
 
     <hr />
 
     <!-- Stage I -->
     <section>
-      <h2><span class="stage-label">Stage I</span>Event — The Tensor</h2>
+      <h2><span class="stage-label">Stage I · Geometry</span>Event — The Tensor</h2>
       <p>
         Reality before interpretation. Not opinions. Not narratives. Simply attributed
         observations: timestamped, geolocated, actor-attributed, sentiment-tagged.
@@ -381,7 +449,7 @@
 
     <!-- Stage II -->
     <section>
-      <h2><span class="stage-label">Stage II</span>Witness — The Jacobian</h2>
+      <h2><span class="stage-label">Stage II · Geometry</span>Witness — The Jacobian</h2>
       <p>
         Compression begins. A Jacobian asks: <em>which dimensions actually matter locally?</em>
         Almost everything disappears. Only sensitivities remain. This is literally seeing —
@@ -405,11 +473,17 @@
 
     <!-- Stage III -->
     <section>
-      <h2><span class="stage-label">Stage III</span>Curvature — The Hessian</h2>
+      <h2><span class="stage-label">Stage III · Geometry</span>Curvature — The Hessian</h2>
+      <p class="pullquote">
+        Gradients can disappear; curvature cannot.
+      </p>
       <p>
-        Now the landscape itself becomes visible. Gradients can disappear; curvature cannot.
-        Two societies may have identical polarization metrics today yet possess completely
-        different Hessians: one sits in a stable basin, one sits on a knife-edge.
+        Now the landscape itself becomes visible. Two societies may have identical
+        polarization metrics today yet possess completely different Hessians: one sits in a
+        stable basin, one sits on a knife-edge. That is the whole reason Stage III earns its
+        own place in the pentad rather than folding into Stage II — a first derivative can
+        vanish at exactly the moment the second derivative is telling you the most important
+        thing in the system.
       </p>
       <p>
         Societal evolution resembles stochastic gradient descent: iterative, noisy,
@@ -421,17 +495,20 @@
 
     <!-- Stage IV -->
     <section>
-      <h2><span class="stage-label">Stage IV</span>Identity — Eigenmodes</h2>
+      <h2><span class="stage-label">Stage IV · Spectra</span>Identity — Eigenmodes</h2>
       <p>
-        This is the most original part of the framework.
+        This is the most original part of the framework, and the point where the mathematics
+        changes register.
         <strong>Identity is not ideology. Identity is the dominant eigenspace.</strong>
       </p>
       <p>
         Conservative, progressive, religious, national, technocratic — these are not merely
         beliefs. They are persistent directions that survive repeated projections of the
-        Hessian. An ideology dies. An eigenmode survives perturbation. That is why
-        civilizations can oscillate politically while remaining recognizably themselves
-        across centuries.
+        Hessian. If a system evolves as x<sub>t+1</sub> = Ax<sub>t</sub>, the eigenvectors of
+        A really are the directions that persist under repeated application — not a metaphor,
+        an actual spectral statement. An ideology dies. An eigenmode survives perturbation.
+        That is why civilizations can oscillate politically while remaining recognizably
+        themselves across centuries.
       </p>
       <p>
         Resilient institutional design must allow populations to resolve conflicts along
@@ -442,7 +519,7 @@
 
     <!-- Stage V -->
     <section>
-      <h2><span class="stage-label">Stage V</span>Appraisal — The Categorical Jump</h2>
+      <h2><span class="stage-label">Stage V · Judgment</span>Appraisal — The Categorical Jump</h2>
 
       <div class="callout callout-signal">
         <p>
@@ -469,6 +546,54 @@
 
     <hr />
 
+    <!-- NEW: Operator chain -->
+    <section>
+      <h2><span class="stage-label">Formalization</span>The Operator Chain</h2>
+      <p>
+        Naming the maps between stages turns the pentad from a taxonomy into a pipeline.
+        Three of the four maps are genuine operators in a shared family; the last is not,
+        and is marked differently on purpose.
+      </p>
+
+      <div class="op-chain">
+        <span class="op-node">T</span>
+        <span class="op-arrow"><span class="op-fn">∂/∂t</span><span class="arrow-glyph">→</span></span>
+        <span class="op-node">J</span>
+        <span class="op-arrow"><span class="op-fn">∂/∂x</span><span class="arrow-glyph">→</span></span>
+        <span class="op-node">H</span>
+        <span class="op-arrow spectral"><span class="op-fn">eig(·)</span><span class="arrow-glyph">→</span></span>
+        <span class="op-node">(λ, v)</span>
+        <span class="op-arrow judgment"><span class="op-fn">appraise(·)</span><span class="arrow-glyph">⇒</span></span>
+        <span class="op-node">L</span>
+      </div>
+
+      <ul style="margin: 0 0 1rem 1.2rem; font-size: 0.95rem; line-height: 1.8;">
+        <li><strong>T ↦ J</strong> — differentiation. Well-posed, first-order linearization.</li>
+        <li><strong>J ↦ H</strong> — differentiation again. Well-posed, second-order curvature.</li>
+        <li><strong>H ↦ (λ, v)</strong> — <em>not</em> differentiation. Spectral decomposition:
+          solve Hv = λv. This is the seam where the framework leaves differential geometry and
+          enters linear algebra.</li>
+        <li><strong>(λ, v) ↦ L</strong> — <em>not</em> an operator in the same family at all.
+          An evaluative functional, closer to a Lyapunov function or a hazard functional than
+          to a derivative or an eigenvalue problem. Drawn with a double arrow (⇒) above rather
+          than a single one, deliberately, to mark that this step is not the same kind of move
+          as the first three.</li>
+      </ul>
+
+      <div class="callout callout-spectral">
+        <p>
+          <strong>Why L is not formalized as "just another arrow."</strong> The whole
+          philosophical claim of Stage V is that appraisal is categorically outside the
+          differential-then-spectral chain. Giving E ↦ L the same visual and notational status
+          as T ↦ J would quietly undo that argument. The double arrow above is the honest
+          notation: L depends on (λ, v), but it is not derived from it the way H is derived
+          from J.
+        </p>
+      </div>
+    </section>
+
+    <hr />
+
     <!-- Kinematic note -->
     <section>
       <h2><span class="stage-label">Structural Note</span>Why Snap Breaks the Analogy</h2>
@@ -481,7 +606,9 @@
         Ukubona is not asking "what is the next derivative?" It is asking <em>"should these
         derivatives exist at all?"</em> That question belongs to a different logical type —
         the same distinction as proof versus meta-proof, or map versus choice of projection
-        system. The TMVES pentad is <strong>4 + 1</strong>, not 5.
+        system. The TMVES pentad is <strong>4 + 1</strong>, not 5 — and, more precisely per
+        the tier table above, it is <strong>3 + 1 + 1</strong>: three differential-geometric
+        stages, one spectral stage, one judgment stage.
       </p>
     </section>
 
@@ -511,7 +638,10 @@
       <p>
         Patients understand landscapes far better than confidence intervals. R(t) supersedes
         the CI because it interrogates the geometry of the outcome space rather than the
-        density of outcomes within a fixed — and possibly wrong — space.
+        density of outcomes within a fixed — and possibly wrong — space. In the operator-chain
+        terms above, R(t) is a concrete, closed-form instance of the appraisal functional L —
+        one of the few domains where that last, categorically distinct step can be written
+        down explicitly rather than gestured at.
       </p>
     </section>
 
@@ -541,10 +671,17 @@
   </main>
 
   <footer>
-    <strong>Ukubona LLC</strong> · Roundtable Archive · July 13, 2026<br>
-    TMVES: Tensor → Matrix (Jacobian) → Vector (Hessian) → Eigenmode → Scalar (Appraisal)<br>
-    R(t) = d(x, ∂M) &nbsp;·&nbsp; θᵗ = Σ Eventᵢ &nbsp;·&nbsp;
-    <em>Okubala si Kulaba</em>
+    <strong>Ukubona LLC</strong> · Roundtable Archive · Revision 2 · July 13, 2026<br>
+    TMVES mnemonic: Tensor → Jacobian → Hessian → Eigenmode → Scalar
+    <span class="tier-line">
+      <span class="tier-geo">Geometry</span> (T, J, H — differentiation) →
+      <span class="tier-spec">Spectra</span> ((λ,v) — eigendecomposition) →
+      <span class="tier-judg">Judgment</span> (L — appraisal functional, not a derivative)
+    </span>
+    <span class="tier-line">
+      R(t) = d(x, ∂M) &nbsp;·&nbsp; θᵗ = Σ Eventᵢ &nbsp;·&nbsp;
+      <em>Okubala si Kulaba</em>
+    </span>
   </footer>
 
 </div>
